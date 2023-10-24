@@ -40,11 +40,11 @@ $appDir = "C:\Users\Public\rdp2ngrok"
 $appScript = "$appDir\app.py"
 New-Item -ItemType Directory -Path $appDir | Out-Null
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/carince/rdp2ngrok/main/app.py" -OutFile $appScript
-Start-Process -FilePath $pythonExe -ArgumentList "-m pip install ngrok requests" -WorkingDirectory $appDir -Wait
+Start-Process -FilePath $pythonExe -ArgumentList "-m pip install ngrok requests privatebinapi" -WorkingDirectory $appDir -Wait
 
-$appPath = 'powershell.exe'
+$appPath = "`"C:\Program Files\Python312\pythonw.exe`""
 $taskname = 'rdp2ngrok'
-$action = New-ScheduledTaskAction -Execute $appPath -Argument "-NoLogo -NoProfile -Command & `'$pythonwExe`' $appScript"
+$action = New-ScheduledTaskAction -Execute $appPath -Argument "C:\Users\Public\rdp2ngrok\app.py"
 $trigger = New-ScheduledTaskTrigger -AtStartup
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -WakeToRun
 Register-ScheduledTask -Action $action -Trigger $trigger -TaskName $taskname -Settings $settings -Force | Write-Verbose
